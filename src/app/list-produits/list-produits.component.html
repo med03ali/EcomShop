@@ -1,4 +1,17 @@
-<p class="text-success">list-produits works!</p>
-
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{{ produits[0].imageURL }}" class="card-img-top" alt="{{ produits[0].nom }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ produits[0].nom }}</h5>
+            <p class="card-text">{{ produits[0].description }}</p>
+            <p class="card-text"><strong>Prix:</strong> {{ produits[0].prix }} MAD</p>
+            <a class="btn btn-primary">Buy Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
  
-<button class="btn btn-primary">add</button>
