@@ -1,17 +1,13 @@
-<div class="container mt-4">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card">
-          <img src="{{ produits[0].imageURL }}" class="card-img-top" alt="{{ produits[0].nom }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ produits[0].nom }}</h5>
-            <p class="card-text">{{ produits[0].description }}</p>
-            <p class="card-text"><strong>Prix:</strong> {{ produits[0].prix }} MAD</p>
-            <a class="btn btn-primary">Buy Now</a>
-          </div>
-        </div>
+<app-navbar [panier] = "panierSelected" (panierSelected)="onPanierSelected($event)"></app-navbar>
+
+@if (!panierSelected){
+<div class="row row-cols-1 row-cols-md-3 g-4">
+      @for (item of produits; track $index){
+        <div class="col">
+          <app-product-item [product]="item" (productSelected)="onProductSelected($event)"></app-product-item>
       </div>
-    </div>
-  </div>
-  
- 
+      }
+</div>
+} @else {
+  <app-panier [items]="items"></app-panier>
+}

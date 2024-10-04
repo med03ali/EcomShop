@@ -1,0 +1,11 @@
+/* Set a fixed height for the images */
+.card-img-custom {
+    height: 200px;  /* Adjust this value as needed */
+    object-fit: cover;  /* Ensures image is scaled and cropped to fit within the specified height */
+  }
+  
+  /* Ensure all cards are of equal height */
+  .card {
+    height: 100%;  /* Makes the card take up the full height of the column */
+  }
+  
