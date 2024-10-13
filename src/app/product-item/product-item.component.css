@@ -1,0 +1,49 @@
+.card {
+  border: none; /* Remove default border */
+  border-radius: 10px; /* Rounded corners for the card */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+.card-img-custom {
+  border-top-left-radius: 10px; /* Round top corners */
+  border-top-right-radius: 10px; /* Round top corners */
+  width: 100%; /* Full width of the card */
+  height: 200px; /* Fixed height for uniformity */
+  object-fit: cover; /* Cover the area while maintaining aspect ratio */
+}
+
+.card-title {
+  font-size: 1.25rem; /* Larger title font size */
+  font-weight: 600; /* Semi-bold font weight */
+}
+
+.card-text {
+  font-size: 0.9rem; /* Smaller font size for description */
+  color: #555; /* Slightly darker text color */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary color */
+  border: none; /* Remove border */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 1.1rem; /* Smaller title on mobile */
+  }
+
+  .card-text {
+    font-size: 0.85rem; /* Smaller description on mobile */
+  }
+}

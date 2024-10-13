@@ -1,28 +1,57 @@
 <div class="container mt-4">
-    <h2>Panier</h2>
-    <table class="table table-bordered">
-      <thead class="thead-dark">
+  <h2>Panier</h2>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Description</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Total</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (item of items; track $index) {
         <tr>
-          <th scope="col">Description</th>
-          <th scope="col">Prix</th>
-          <th scope="col">Quantité</th>
-          <th scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for(item of items; track $index){
-
-
-        <tr>
+          <td><img [src]="item.produit.images[0]" alt="product image" width="50"></td>
           <td>{{ item.produit.title }}</td>
-          <td>{{ item.produit.price }}</td>
-          <td>{{ item.quantite }}</td>
+          <td>{{ item.produit.price}}</td>
+          <td>
+            <button class="btn btn-secondary btn-sm" (click)="decreaseQuantity($index)">-</button>
+            <input
+              type="number"
+              [(ngModel)]="item.quantite"
+              (ngModelChange)="updateQuantite($index, item.quantite)"
+              min="1"
+              class="form-control d-inline"
+              style="width: 60px;"
+            />
+            <button class="btn btn-secondary btn-sm" (click)="increaseQuantity($index)">+</button>
+          </td>
           <td>{{ item.produit.price * item.quantite }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeItem($index)"
+            >
+              Supprimer
+            </button>
+          </td>
         </tr>
+      }
+    </tbody>
+  </table>
 
-        }
-
-      </tbody>
-    </table>
-    <button class="btn btn-primary">Valider le Panier</button>
+  <div class="text-end">
+    <h4>Total: {{ calculateTotal() }}</h4>
   </div>
+
+  <button
+    class="btn btn-primary"
+    (click)="validerPanier()"
+    [disabled]="items.length === 0"
+  >
+    Valider le Panier
+  </button>
+</div>

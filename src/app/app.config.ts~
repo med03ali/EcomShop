@@ -9,6 +9,6 @@ import {CategoryService} from "./navbar/category.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
-    provideHttpClient(withFetch()), ProduitService, CategoryService
+    provideHttpClient(), ProduitService, CategoryService
   ]
 };

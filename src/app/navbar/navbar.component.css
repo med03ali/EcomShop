@@ -1,0 +1,89 @@
+/* Navbar styling */
+.navbar {
+  background-color: #007bff;
+  padding: 1rem 1.5rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: #fff;
+  margin-right: 1.5rem;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #ffcc00;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+  color: #ffcc00;
+}
+
+/* Cart icon styling */
+.fa-shopping-cart {
+  margin-right: 5px;
+  font-size: 1.5rem;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.badge.bg-danger {
+  vertical-align: top;
+  margin-left: 5px;
+  font-size: 0.85rem;
+}
+
+/* Search container styling */
+.search-container {
+  position: relative;
+  max-width: 250px;
+}
+
+.search-container input {
+  padding-right: 2rem; /* Space for search icon */
+  border-radius: 30px;
+  border: 2px solid #fff;
+}
+
+.search-container i.fa-magnifying-glass {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.form-control:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+
+/* Category Dropdown styling */
+select.form-control {
+  width: auto;
+  border-radius: 30px;
+  background-color: #fff;
+  color: #007bff;
+}
+
+select.form-control:focus {
+  border-color: #ffcc00;
+}
+
+/* Search button styling */
+.btn-outline-light {
+  color: #fff;
+  border-color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #ffcc00;
+  color: #000;
+}

@@ -1,20 +1,66 @@
 <nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand">ECOM</a>
-      <ul class="navbar-nav d-flex flex-row me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page">Accueil</a>
-        </li>
-        <li class="nav-item ms-3">
-          <a class="nav-link">Page 1</a>
-        </li>
-        <li class="nav-item ms-3">
-          <a class="nav-link" href="#" (click)="showPanier()">Mon Panier</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Rechercher</button>
-      </form>
-    </div>
+  <div class="container-fluid">
+    <!-- Navbar Brand -->
+    <a class="navbar-brand" href="#">ECOM</a>
+
+    <!-- Navigation Links -->
+    <ul class="navbar-nav d-flex flex-row me-auto">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Accueil</a>
+      </li>
+      <li class="nav-item ms-3">
+        <a class="nav-link" href="#">Page 1</a>
+      </li>
+      <li class="nav-item ms-3">
+        <a href="#" (click)="showPanier()" class="nav-link">
+          Mon Panier
+          <i class="fa fa-shopping-cart"></i>
+          <span class="badge bg-danger">{{ nbrItemsSelected }}</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Form with Search and Category Dropdown -->
+    <form class="d-flex align-items-center">
+      <!-- Search Input -->
+      <div class="search-container position-relative me-2">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchKey"
+          (ngModelChange)="onSearchByKey()"
+          list="productSuggestions"
+          placeholder="Rechercher des produits"
+          aria-label="Search"
+          name="searchKey"
+        />
+        <i class="fa fa-magnifying-glass position-absolute end-0 top-50 translate-middle-y text-light me-2"></i>
+
+        <!-- Datalist for product suggestions -->
+        <datalist id="productSuggestions">
+          @for (product of filteredProducts; track $index) {
+            <option [value]="product.name"></option>
+          }
+        </datalist>
+      </div>
+
+      <!-- Category Dropdown -->
+      <select
+        class="form-control me-2"
+        [(ngModel)]="selectedCategory"
+        name="selectedCategory"
+      >
+        @for (category of categories; track $index) {
+          <option [value]="category">
+            {{ category }}
+          </option>
+        }
+      </select>
+
+      <!-- Search Button -->
+      <button class="btn btn-outline-light" type="submit" (click)="search()">
+        Rechercher
+      </button>
+    </form>
+  </div>
 </nav>

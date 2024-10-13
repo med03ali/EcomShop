@@ -15,7 +15,7 @@ export class ProductItemComponent {
   @Input() product!: Product;
   @Output() productSelected = new EventEmitter<Product>();
   addToPanier() {
-    this.productSelected.emit(new Product(this.product.id, this.product.title, this.product.price, this.product.images, this.product.description, this.product.stock - 1));
+    this.productSelected.emit(new Product(this.product.id, this.product.title, this.product.price, this.product.images, this.product.description, this.product.Stock - 1));
   }
   getColor() {
     return this.product.stock > 0 ? 'green' : 'red';

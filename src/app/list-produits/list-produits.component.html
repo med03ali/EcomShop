@@ -1,7 +1,11 @@
-<app-navbar [panier] = "panierSelected" (panierSelected)="onPanierSelected($event)"></app-navbar>
+<app-navbar [panier] = "panierSelected" [nbrItemsSelected]="getCartItemCount()" (panierSelected)="onPanierSelected($event)" (selectedCategoryEmmiter)="onSearch($event)" (searchedText)="onSearchedText($event)"></app-navbar>
 
 @if (!panierSelected){
-<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="container text-center mt-5 py-5">
+    <h3>Our Products</h3>
+    <hr class="mx-auto">
+  </div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
       @for (item of produits; track $index){
         <div class="col">
           <app-product-item [product]="item" (productSelected)="onProductSelected($event)"></app-product-item>
@@ -9,5 +13,11 @@
       }
 </div>
 } @else {
+  @if(items.length > 0){
   <app-panier [items]="items"></app-panier>
+  } @else {
+    <div>
+      <p>Votre panier est vide. Ajoutez des produits pour continuer.</p>
+    </div>
+  }
 }
