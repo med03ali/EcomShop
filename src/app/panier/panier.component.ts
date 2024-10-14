@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { LignePanier } from '../models/LignePanier';
 import {FormsModule} from "@angular/forms";
+import {SharedService} from "../shared-service.service";
 
 @Component({
   selector: 'app-panier',
@@ -11,22 +12,17 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './panier.component.html',
   styleUrl: './panier.component.css',
 })
-export class PanierComponent {
+export class PanierComponent implements OnInit{
   @Input() items: LignePanier[] = [];
+  constructor(private sharedService: SharedService) {
+  }
 
-  /*
   ngOnInit(): void {
-    // Load cart from localStorage if it exists
-    const storedCart = localStorage.getItem('cartItems');
-    if (storedCart) {
-      this.items = JSON.parse(storedCart);
-    }
+    // Subscribe to the shared service's cart items
+    this.sharedService.cartItems$.subscribe(cartItems => {
+      this.items = cartItems;
+    });
   }
-
-  updateCartInLocalStorage() {
-    localStorage.setItem('cartItems', JSON.stringify(this.items));
-  }
-*/
 
   updateQuantite(index: number, newQuantite: number) {
     if (newQuantite < 1) {
@@ -34,7 +30,6 @@ export class PanierComponent {
     } else {
       this.items[index].quantite = newQuantite;
     }
-    //this.updateCartInLocalStorage();
   }
 
   calculateTotal(): number {
@@ -46,7 +41,6 @@ export class PanierComponent {
 
   removeItem(index: number) {
     this.items.splice(index, 1);
-    //this.updateCartInLocalStorage();
   }
 
   validerPanier() {
@@ -55,13 +49,11 @@ export class PanierComponent {
 
   increaseQuantity(index: number) {
     this.items[index].quantite += 1;
-    //this.updateCartInLocalStorage();
   }
 
   decreaseQuantity(index: number) {
     if (this.items[index].quantite > 1) {
       this.items[index].quantite -= 1;
-      //this.updateCartInLocalStorage();
     }
   }
 }

@@ -1,65 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/Product';
-import { ProductItemComponent } from "../product-item/product-item.component";
 import { LignePanier } from '../models/LignePanier';
-import {NavbarComponent} from "../navbar/navbar.component";
-import {PanierComponent} from "../panier/panier.component";
-import {NgIf} from "@angular/common";
-import {ProduitService} from "./produit.service";
-
+import { ProduitService } from '../produit.service';
+import { SharedService } from '../shared-service.service';
+import {ProductItemComponent} from "../product-item/product-item.component";
 
 @Component({
   selector: 'app-list-produits',
-  standalone: true,
-  imports: [ProductItemComponent, NavbarComponent, PanierComponent, NgIf],
   templateUrl: './list-produits.component.html',
-  styleUrl: './list-produits.component.css'
+  styleUrls: ['./list-produits.component.css'],
+  imports: [
+    ProductItemComponent
+  ],
+  standalone: true
 })
-export class ListProduitsComponent implements OnInit{
+export class ListProduitsComponent implements OnInit {
   items: LignePanier[] = [];
+  produits: Array<Product> = [];
 
-  panierSelected: boolean = false;
+  constructor(private produitService: ProduitService, private sharedService: SharedService) {}
 
-  produits! : Array<Product>;
-  //searchQuery: string = 'https://dummyjson.com/products/';
+  ngOnInit(): void {
+    // Load initial products
+    this.produitService.getProduits().subscribe((data: any) => {
+      this.produits = data.products;
+    });
 
+    // Subscribe to the search key and update products
+    this.sharedService.searchKey$.subscribe((searchKey) => {
+      if (searchKey) {
+        this.onSearchedText(searchKey);
+      }
+    });
 
-  constructor(private produitService: ProduitService) {
-
+    // Subscribe to the selected category and update products
+    this.sharedService.selectedCategory$.subscribe((category) => {
+      if (category) {
+        this.onSearch(category);
+      }
+    });
   }
 
-  onProductSelected($event: Product) {
-    const productExists = this.items.find(item => item.produit.title === $event.title);
-
+  onProductSelected(product: Product) {
+    const productExists = this.items.find((item) => item.produit.title === product.title);
     if (productExists) {
       productExists.quantite++;
     } else {
-      this.items.push(new LignePanier($event, 1));
-    }  }
+      this.items.push(new LignePanier(product, 1));
+    }
 
-  onPanierSelected($event: boolean) {
-    console.log($event);
-    this.panierSelected = $event;
+    // Update cart item count in the shared service
+    this.sharedService.setCartItemCount(this.getCartItemCount());
   }
 
-  onSearch($event: string) {
-
-      this.produitService.getCategory($event).subscribe((data:any) => {
-        this.produits = data.products;
-      });
-
+  onSearch(category: string) {
+    this.produitService.getCategory(category).subscribe((data: any) => {
+      this.produits = data.products;
+    });
   }
 
-  ngOnInit(): void {
-    this.produitService.getProduits().subscribe((data:any) => {
-      this.produits = data.products;})
+  onSearchedText(searchKey: string) {
+    this.produitService.getProductByKey(searchKey).subscribe((data: any) => {
+      this.produits = data.products;
+    });
   }
-  onSearchedText($event: string) {
-    this.produitService.getProductBykey($event).subscribe((data:any) => {
-      this.produits = data.products;})
-  }
+
   getCartItemCount(): number {
     return this.items.reduce((acc, item) => acc + item.quantite, 0);
   }
-
 }

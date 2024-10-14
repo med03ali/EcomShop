@@ -1,61 +1,67 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from './category.service';
-import {NgClass} from "@angular/common";
-
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {ProduitService} from "../produit.service";
+import {SharedService} from "../shared-service.service";
+import {AuthService} from "../auth.service";
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgForOf, NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  @Input() panier!: boolean;
-  @Input() nbrItemsSelected: number = 0;
-  @Output() panierSelected = new EventEmitter();
-  @Output() searchedText = new EventEmitter(); // Emits searched text
-  @Output() selectedCategoryEmmiter = new EventEmitter();
+
 
   categories: string[] = [];
   selectedCategory: string = '';
   products: any[] = []; // All products fetched from the API
   filteredProducts: any[] = []; // Products filtered based on user input
   searchKey: string = ''; // Track the search key input
+  loggedIn: boolean = false;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProduitService,
+    private sharedService: SharedService,
+    private authService: AuthService
+  ) {}
+  signIn() {
+    this.authService.login();
+    this.loggedIn = true;
+  }
+  signOut() {
+    this.authService.logout();
+    this.loggedIn = false;
+  }
 
   ngOnInit(): void {
     // Fetch categories on init
     this.categoryService.getCategories().subscribe((data: any) => {
       this.categories = data;
     });
+
+    // Fetch products on init
+    this.productService.getProduits().subscribe((data: any) => {
+      this.products = data.products;
+    });
   }
 
-
-
-  // Emit searched text and get product suggestions
+  // Emit searched text and filter product suggestions
   onSearchByKey() {
-    this.searchedText.emit(this.searchKey);
-  }
+    this.sharedService.setSearchKey(this.searchKey);
 
-
-
-  // Filter products based on the search key
-  filterProducts() {
-    this.filteredProducts = this.products.filter((product) =>
+    // Filter products based on the search key
+    this.filteredProducts = this.products.filter(product =>
       product.name.toLowerCase().includes(this.searchKey.toLowerCase())
     );
   }
 
-  // Toggle the display of the shopping cart
-  showPanier() {
-    this.panier = !this.panier;
-    this.panierSelected.emit(this.panier);
-  }
-
-  // Emit both category and product name when searching
+  // Emit selected category
   search() {
-    this.selectedCategoryEmmiter.emit(this.selectedCategory);
+    this.sharedService.setSelectedCategory(this.selectedCategory);
   }
 }

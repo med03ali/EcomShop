@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {RouterOutlet, Routes} from '@angular/router';
 import { ListProduitsComponent } from "./list-produits/list-produits.component";
 import { NavbarComponent } from "./navbar/navbar.component";
+import {PanierComponent} from "./panier/panier.component";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,29 @@ import { NavbarComponent } from "./navbar/navbar.component";
 })
 export class AppComponent {
   title = 'ecom-app';
-  
-  
+  cartItemCount: number = 0;
+  constructor() {
+  }
 
-  
+  // Handle search text emitted by NavbarComponent
+  onSearchedText(searchKey: string) {
+    console.log('Search for:', searchKey);
+    // Add logic here to filter products based on searchKey
+  }
+
+  // Handle category selection emitted by NavbarComponent
+  onCategorySelected(category: string) {
+    console.log('Category selected:', category);
+    // Add logic here to filter products based on the selected category
+  }
+
+  // This method should be updated whenever items in the cart change
+  updateCartItemCount(count: number) {
+    this.cartItemCount = count;
+  }
+
+
+
+
+
 }

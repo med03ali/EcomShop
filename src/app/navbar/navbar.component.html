@@ -6,19 +6,26 @@
     <!-- Navigation Links -->
     <ul class="navbar-nav d-flex flex-row me-auto">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Accueil</a>
+        <a class="nav-link active" routerLink="/">Accueil</a>
       </li>
       <li class="nav-item ms-3">
         <a class="nav-link" href="#">Page 1</a>
       </li>
       <li class="nav-item ms-3">
-        <a href="#" (click)="showPanier()" class="nav-link">
-          Mon Panier
-          <i class="fa fa-shopping-cart"></i>
-          <span class="badge bg-danger">{{ nbrItemsSelected }}</span>
+        <a routerLink="/panier" class="nav-link">
+          Orders
+
         </a>
       </li>
     </ul>
+    @if(!loggedIn){
+    <button class="btn btn-outline-light" type="button" (click)="signIn()">
+      Sign in
+    </button>} @else {
+      <button class="btn btn-outline-light" type="button" (click)="signOut()">
+        Sign Out
+      </button>
+    }
 
     <!-- Form with Search and Category Dropdown -->
     <form class="d-flex align-items-center">
@@ -38,9 +45,7 @@
 
         <!-- Datalist for product suggestions -->
         <datalist id="productSuggestions">
-          @for (product of filteredProducts; track $index) {
-            <option [value]="product.name"></option>
-          }
+          <option *ngFor="let product of filteredProducts" [value]="product.name"></option>
         </datalist>
       </div>
 
@@ -48,17 +53,16 @@
       <select
         class="form-control me-2"
         [(ngModel)]="selectedCategory"
+
         name="selectedCategory"
       >
-        @for (category of categories; track $index) {
-          <option [value]="category">
-            {{ category }}
-          </option>
-        }
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
       </select>
 
       <!-- Search Button -->
-      <button class="btn btn-outline-light" type="submit" (click)="search()">
+      <button class="btn btn-outline-light" type="button" (click)="search()">
         Rechercher
       </button>
     </form>
