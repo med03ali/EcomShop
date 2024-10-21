@@ -1,12 +1,12 @@
 <div class="container mt-4">
-  <h2>Panier</h2>
+  <h2>Cart</h2>
   <table class="table table-bordered">
     <thead class="thead-dark">
     <tr>
       <th scope="col">Image</th>
       <th scope="col">Description</th>
-      <th scope="col">Prix</th>
-      <th scope="col">Quantité</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Total</th>
       <th scope="col">Actions</th>
     </tr>
@@ -35,7 +35,7 @@
               class="btn btn-danger btn-sm"
               (click)="removeItem($index)"
             >
-              Supprimer
+              Delete
             </button>
           </td>
         </tr>
@@ -52,6 +52,6 @@
     (click)="validerPanier()"
     [disabled]="items.length === 0"
   >
-    Valider le Panier
+    Validate Cart
   </button>
 </div>

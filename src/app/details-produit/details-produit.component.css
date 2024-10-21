@@ -1,0 +1,20 @@
+/* Change the background color of the control buttons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  border-radius: 50%; /* Optional: Add rounded edges */
+}
+
+
+/* Optional: Increase size for better visibility */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Optional: Add hover effect for controls */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+  background-color: rgba(255, 255, 255, 0.7); /* Lighter on hover */
+}

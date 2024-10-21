@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-body text-center">
+      <!-- Profile Picture -->
+      <div class="profile-picture mb-3">
+        <img [src]="user.profilePicture || 'assets/default-profile.png'" alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+      </div>
+
+      <!-- File input for changing profile picture (visible in edit mode) -->
+      <div *ngIf="isEditing" class="mb-3">
+        <input type="file" (change)="onFileSelected($event)">
+      </div>
+
+      <!-- User Details -->
+      <h4 *ngIf="!isEditing">{{ user.name }}</h4>
+      <input *ngIf="isEditing" [(ngModel)]="user.name" class="form-control mb-3" placeholder="Name">
+
+      <p *ngIf="!isEditing">{{ user.email }}</p>
+      <input *ngIf="isEditing" [(ngModel)]="user.email" class="form-control mb-3" placeholder="Email" type="email">
+
+      <!-- Action Buttons -->
+      <div class="d-flex justify-content-center">
+        <button *ngIf="!isEditing" class="btn btn-primary me-2" (click)="toggleEditMode()">Edit Profile</button>
+        <button *ngIf="isEditing" class="btn btn-success me-2" (click)="saveProfile()">Save</button>
+        <button *ngIf="isEditing" class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

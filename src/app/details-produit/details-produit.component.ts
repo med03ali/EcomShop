@@ -3,11 +3,17 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../models/Product';
 import { SharedService } from '../shared-service.service';
 import { ProduitService } from "../produit.service";
+import {NgClass, NgForOf, NgStyle} from "@angular/common";
 
 @Component({
   selector: 'app-details-produits',
   templateUrl: './details-produit.component.html',
   standalone: true,
+  imports: [
+    NgClass,
+    NgForOf,
+    NgStyle
+  ],
   styleUrls: ['./details-produit.component.css']
 })
 export class DetailsProduitsComponent implements OnInit {
@@ -43,7 +49,7 @@ export class DetailsProduitsComponent implements OnInit {
   }
 
   getState() {
-    return this.product?.stock > 0 ? 'En stock' : 'En rupture de stock';
+    return this.product?.stock > 0 ? 'In Stock' : 'En rupture de stock';
   }
 
   addToPanier() {

@@ -41,17 +41,7 @@ export class ListProduitsComponent implements OnInit {
     });
   }
 
-  onProductSelected(product: Product) {
-    const productExists = this.items.find((item) => item.produit.title === product.title);
-    if (productExists) {
-      productExists.quantite++;
-    } else {
-      this.items.push(new LignePanier(product, 1));
-    }
 
-    // Update cart item count in the shared service
-    this.sharedService.setCartItemCount(this.getCartItemCount());
-  }
 
   onSearch(category: string) {
     this.produitService.getCategory(category).subscribe((data: any) => {

@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import { LignePanier } from '../models/LignePanier';
 import {FormsModule} from "@angular/forms";
 import {SharedService} from "../shared-service.service";
+import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-panier',
@@ -14,7 +16,9 @@ import {SharedService} from "../shared-service.service";
 })
 export class PanierComponent implements OnInit{
   @Input() items: LignePanier[] = [];
-  constructor(private sharedService: SharedService) {
+  constructor(private sharedService: SharedService,
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -44,7 +48,15 @@ export class PanierComponent implements OnInit{
   }
 
   validerPanier() {
-    alert('Panier validé avec succès!');
+    if (this.authService.isLoggedIn()) {
+      alert('Panier validé avec succès!');
+    } else {
+      this.router.navigate(['/signin']);
+    }
+    for (let i = this.items.length - 1; i >= 0; i--) {
+      this.removeItem(i); // Call deleteItem for each item
+    }
+    
   }
 
   increaseQuantity(index: number) {

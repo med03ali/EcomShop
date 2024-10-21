@@ -1,13 +1,19 @@
 /* Navbar styling */
 .navbar {
-  background-color: #007bff;
+  background-color: #000000;
   padding: 1rem 1.5rem;
 }
 
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff;
+  color: #ffffff;
+}
+
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -21,9 +27,6 @@
   color: #ffcc00;
 }
 
-.navbar-nav .nav-item .nav-link.active {
-  color: #ffcc00;
-}
 
 /* Cart icon styling */
 .fa-shopping-cart {

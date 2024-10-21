@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from './category.service';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {RouterLink, RouterOutlet} from "@angular/router";
+import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {ProduitService} from "../produit.service";
 import {SharedService} from "../shared-service.service";
 import {AuthService} from "../auth.service";
@@ -27,15 +27,15 @@ export class NavbarComponent implements OnInit {
     private categoryService: CategoryService,
     private productService: ProduitService,
     private sharedService: SharedService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
   signIn() {
-    this.authService.login();
-    this.loggedIn = true;
+    this.router.navigate(['/signin']);
   }
   signOut() {
     this.authService.logout();
-    this.loggedIn = false;
+    this.router.navigate(['/']);
   }
 
   ngOnInit(): void {
@@ -48,16 +48,17 @@ export class NavbarComponent implements OnInit {
     this.productService.getProduits().subscribe((data: any) => {
       this.products = data.products;
     });
+
+    this.authService.isAuth$.subscribe(isAuthenticated => {
+      this.loggedIn = isAuthenticated;
+    });
   }
 
   // Emit searched text and filter product suggestions
   onSearchByKey() {
     this.sharedService.setSearchKey(this.searchKey);
 
-    // Filter products based on the search key
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(this.searchKey.toLowerCase())
-    );
+
   }
 
   // Emit selected category

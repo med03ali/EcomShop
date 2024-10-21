@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {LignePanier} from "./models/LignePanier";
+import { LignePanier } from './models/LignePanier';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,14 @@ export class SharedService {
   private selectedCategorySource = new BehaviorSubject<string>('');
   selectedCategory$ = this.selectedCategorySource.asObservable();
 
-  private cartItems = new BehaviorSubject<LignePanier[]>([]);
+  // Cart items BehaviorSubject
+  private cartItems = new BehaviorSubject<LignePanier[]>(this.loadCartFromLocalStorage());
   cartItems$ = this.cartItems.asObservable(); // Observable to be used in the components
+
+  constructor() {
+    // Load the initial cart count from localStorage
+    this.updateCartItemCount();
+  }
 
   // Method to add a product to the cart
   addProductToCart(product: LignePanier) {
@@ -27,7 +33,7 @@ export class SharedService {
     const existingItemIndex = currentItems.findIndex(item => item.produit.id === product.produit.id);
 
     if (existingItemIndex > -1) {
-      // If product already exists in the cart, update quantity
+      // If the product already exists in the cart, update the quantity
       currentItems[existingItemIndex].quantite += 1;
     } else {
       // If it's a new product, add it to the cart
@@ -35,6 +41,8 @@ export class SharedService {
     }
 
     this.cartItems.next(currentItems); // Update the BehaviorSubject
+    this.saveCartToLocalStorage(currentItems); // Save the updated cart to localStorage
+    this.updateCartItemCount(); // Update the cart item count
   }
 
   // Method to get all cart items
@@ -43,8 +51,46 @@ export class SharedService {
   }
 
   // Update cart item count
-  setCartItemCount(count: number) {
-    this.cartItemCountSource.next(count);
+  private updateCartItemCount() {
+    const itemCount = this.cartItems.value.reduce((count, item) => count + item.quantite, 0);
+    this.cartItemCountSource.next(itemCount);
+  }
+
+  // Save cart to localStorage (only if available)
+  private saveCartToLocalStorage(cartItems: LignePanier[]) {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+  }
+
+  // Load cart from localStorage (only if available)
+  private loadCartFromLocalStorage(): LignePanier[] {
+    if (this.isLocalStorageAvailable()) {
+      const storedCart = localStorage.getItem('cartItems');
+      return storedCart ? JSON.parse(storedCart) : [];
+    }
+    return []; // Return an empty array if localStorage is not available
+  }
+
+  // Method to remove all cart items (clear the cart)
+  clearCart() {
+    this.cartItems.next([]);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem('cartItems');
+    }
+    this.updateCartItemCount(); // Reset the cart count
+  }
+
+  // Helper function to check if localStorage is available
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const testKey = '__test__';
+      localStorage.setItem(testKey, testKey);
+      localStorage.removeItem(testKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Update search key

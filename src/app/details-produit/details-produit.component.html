@@ -2,7 +2,26 @@
   <div class="row">
     <!-- Product Image -->
     <div class="col-md-6">
-      <img [src]="product.images[0]" class="img-fluid" alt="{{ product.title }}">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div
+            *ngFor="let image of product.images; let i = index"
+            class="carousel-item"
+            [ngClass]="{ 'active': i === 0 }"
+          >
+            <img [src]="image" class="d-block w-100 img-fluid" alt="{{ product.title }}" />
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
 
     <!-- Product Details -->
@@ -10,7 +29,10 @@
       <h2>{{ product.title }}</h2>
       <p class="text-muted">{{ product.description }}</p>
       <h4>{{ product.price }} $</h4>
-
+      <span [ngStyle]="{ color: getColor() }">{{ getState() }}</span>
+      <br/>
+      <!-- Add to Cart Button -->
+      <a class="btn btn-primary" (click)="addToPanier()">Add To Panier</a>
 
     </div>
   </div>
