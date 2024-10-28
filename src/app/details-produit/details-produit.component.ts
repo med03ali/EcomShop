@@ -106,11 +106,16 @@ export class DetailsProduitsComponent implements OnInit {
     }// Toggle the form visibility
   }
 
+  get filteredComments() {
+    return this.comments.filter(comment => comment.productId === this.product.id);
+  }
+
 
   
   addComment() {
     if (this.commentForm.valid) {
       const newComment = new Comment(
+        this.product.id,
         this.currentUser,
         new Date(),
         this.commentForm.get('comment')?.value,
@@ -134,6 +139,8 @@ export class DetailsProduitsComponent implements OnInit {
       this.comments = JSON.parse(storedComments);
     }
   }
+
+  
 
   
 }
