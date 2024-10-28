@@ -57,6 +57,8 @@ export class SharedService {
       this.updateCartItemCount(); // Update the cart item count
     }
   }
+
+ 
   
 
   // Method to get all cart items
