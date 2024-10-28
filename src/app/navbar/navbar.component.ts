@@ -1,3 +1,4 @@
+import { UserService } from './../user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from './category.service';
@@ -28,13 +29,19 @@ export class NavbarComponent implements OnInit {
     private productService: ProduitService,
     private sharedService: SharedService,
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private userService : UserService
+  ) {
+}
+
+  showLo(){
+    console.log(localStorage);
+  }
   signIn() {
     this.router.navigate(['/signin']);
   }
   signOut() {
-    this.authService.logout();
+    this.userService.logout();
     this.router.navigate(['/']);
   }
 
@@ -49,7 +56,7 @@ export class NavbarComponent implements OnInit {
       this.products = data.products;
     });
 
-    this.authService.isAuth$.subscribe(isAuthenticated => {
+    this.userService.isSignedIn$.subscribe(isAuthenticated => {
       this.loggedIn = isAuthenticated;
     });
   }

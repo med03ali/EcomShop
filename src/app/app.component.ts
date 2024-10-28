@@ -3,11 +3,12 @@ import {RouterOutlet, Routes} from '@angular/router';
 import { ListProduitsComponent } from "./list-produits/list-produits.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import {PanierComponent} from "./panier/panier.component";
+import { FormControl,FormGroup,ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent],
+  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent,ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

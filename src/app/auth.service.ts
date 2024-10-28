@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { User } from './models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -7,38 +8,58 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private isAuth = new BehaviorSubject<boolean>(false);
   isAuth$ = this.isAuth.asObservable();
+  client : User | null = null ;
+  // currentUser: User | null = null;
 
-  private defaultUser = {
-    name: 'OUHASSOU Mohamed Ali',
-    email: 'medali24122003@gmail.com',
-    password: 'SuperAli199',
-    profilePicture: 'assets/default-profile.png'
-  };
+  private defaultUser : User ={name : 'Ali',
+    lastname : 'OUHASSOU',
+    email : 'medali24122003@gmail.com',
+    age : 19,
+    password : 'alibakroth',
+    profilePicture : ''}
 
   private userSubject = new BehaviorSubject<any>(this.defaultUser);
   user$ = this.userSubject.asObservable();
 
   constructor() {
     // Check if localStorage is available (only in browser environment)
-    if (this.isBrowser()) {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        this.userSubject.next(JSON.parse(storedUser)); // Set the userSubject to stored user
-      }
+    // if (this.isBrowser()) {
+    //   const storedUser = localStorage.getItem('user');
+    //   if (storedUser) {
+    //     this.userSubject.next(JSON.parse(storedUser)); // Set the userSubject to stored user
+    //   }
 
-      const storedAuthState = localStorage.getItem('isAuth');
-      if (storedAuthState) {
-        this.isAuth.next(JSON.parse(storedAuthState)); // Restore authentication state
-      }
-    }
+    //   const storedAuthState = localStorage.getItem('isAuth');
+    //   if (storedAuthState) {
+    //     this.isAuth.next(JSON.parse(storedAuthState)); // Restore authentication state
+    //   }
+    // }
   }
+  
+  // setUser(user: User): void {
+  //   this.currentUser = user;
+  // }
+
+  // getUser(): User | null {
+  //   return this.currentUser;
+  // }
+
+  // validateCredentials(email: string, password: string): boolean {
+  //   if (this.currentUser) {
+  //     return this.currentUser.email === email && this.currentUser.password === password;
+  //   }
+  //   return false; // Return false if no user is saved
+  // }
+
   isLoggedIn() {
     return this.isAuth.value;
   }
 
   // Login method
+
   login(email: string, password: string): boolean {
-    if (email === this.defaultUser.email && password === this.defaultUser.password) {
+    
+    if (this.defaultUser && email === this.defaultUser.email && password === this.defaultUser.password) {
       this.isAuth.next(true);
       if (this.isBrowser()) {
         localStorage.setItem('isAuth', 'true');
@@ -49,6 +70,12 @@ export class AuthService {
     } else {
       console.error('Invalid credentials!');
       return false; // Login failed
+    }
+  }
+
+  stockUser(client : User){
+    if (this.isBrowser()) {
+      localStorage.setItem('user', JSON.stringify(client)); // Store user data in localStorage
     }
   }
 
@@ -64,12 +91,24 @@ export class AuthService {
   }
 
   // Get user data
-  getUser() {
+  getUserSub() {
+    if (this.isBrowser()) {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        this.userSubject.next(JSON.parse(storedUser)); // Set the userSubject to stored user
+      }
+
+      const storedAuthState = localStorage.getItem('isAuth');
+      if (storedAuthState) {
+        this.isAuth.next(JSON.parse(storedAuthState)); // Restore authentication state
+      }
+    }
+
     return this.userSubject.value;
   }
 
   // Update user profile
-  updateUser(updatedUser: any) {
+  updateUserSub(updatedUser: any) {
     this.userSubject.next(updatedUser);
     if (this.isBrowser()) {
       localStorage.setItem('user', JSON.stringify(updatedUser));

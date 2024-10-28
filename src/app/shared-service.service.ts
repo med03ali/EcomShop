@@ -45,6 +45,20 @@ export class SharedService {
     this.updateCartItemCount(); // Update the cart item count
   }
 
+  removeProductFromCart(productId: number) {
+    let currentItems = this.cartItems.value;
+    const updatedItems = currentItems.filter(item => item.produit.id !== productId); // Remove item
+  
+    // Check if the updated array is different to trigger a BehaviorSubject update
+    if (updatedItems.length !== currentItems.length) {
+      currentItems = [...updatedItems]; // Create a new reference
+      this.cartItems.next(currentItems); // Update the BehaviorSubject
+      this.saveCartToLocalStorage(currentItems); // Save the updated cart to localStorage
+      this.updateCartItemCount(); // Update the cart item count
+    }
+  }
+  
+
   // Method to get all cart items
   getCartItems(): LignePanier[] {
     return this.cartItems.value;

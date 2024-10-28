@@ -12,35 +12,34 @@
     </tr>
     </thead>
     <tbody>
-      @for (item of items; track $index) {
-        <tr>
-          <td><img [src]="item.produit.images[0]" alt="product image" width="50"></td>
-          <td>{{ item.produit.title }}</td>
-          <td>{{ item.produit.price}}</td>
-          <td>
-            <button class="btn btn-secondary btn-sm" (click)="decreaseQuantity($index)">-</button>
-            <input
-              type="number"
-              [(ngModel)]="item.quantite"
-              (ngModelChange)="updateQuantite($index, item.quantite)"
-              min="1"
-              class="form-control d-inline"
-              style="width: 60px;"
-            />
-            <button class="btn btn-secondary btn-sm" (click)="increaseQuantity($index)">+</button>
-          </td>
-          <td>{{ item.produit.price * item.quantite }}</td>
-          <td>
-            <button
-              class="btn btn-danger btn-sm"
-              (click)="removeItem($index)"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      }
+      <tr *ngFor="let item of items; let i = index; trackBy: trackByIndex">
+        <td><img [src]="item.produit.images[0]" alt="product image" width="50"></td>
+        <td>{{ item.produit.title }}</td>
+        <td>{{ item.produit.price }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" (click)="decreaseQuantity(i)">-</button>
+          <input
+            type="number"
+            [(ngModel)]="item.quantite"
+            (ngModelChange)="updateQuantite(i, item.quantite)"
+            min="1"
+            class="form-control d-inline"
+            style="width: 60px;"
+          />
+          <button class="btn btn-secondary btn-sm" (click)="increaseQuantity(i)">+</button>
+        </td>
+        <td>{{ item.produit.price * item.quantite }}</td>
+        <td>
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="removeItem(i)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
     </tbody>
+    
   </table>
 
   <div class="text-end">

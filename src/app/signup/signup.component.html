@@ -1,0 +1,67 @@
+<div class="signup-container">
+    <div class="signup-form">
+      <h2>Sign Up</h2>
+      <form [formGroup]="signupForm">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input id="first-name" type="text" formControlName="firstname" required placeholder="Enter your first name">
+          <div *ngIf="signupForm.get('firstname')?.touched && signupForm.get('firstname')?.hasError('required')" class="error-message">
+            First Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input id="last-name" type="text" formControlName="lastname" required placeholder="Enter your last name">
+          <div *ngIf="signupForm.get('lastname')?.touched && signupForm.get('lastname')?.hasError('required')" class="error-message">
+            Last Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="text" formControlName="email" required placeholder="Enter your email">
+          <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.hasError('required')" class="error-message">
+            Your email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input id="age" type="text" formControlName="age" required placeholder="Enter your age">
+          <div *ngIf="signupForm.get('phonenumber')?.touched && signupForm.get('age')?.hasError('required')" class="error-message">
+            Your age is required
+          </div>   
+          <div *ngIf="signupForm.get('phonenumber')?.touched && signupForm.get('age')?.hasError('min')" class="error-message">
+            Your need to be at least 18 years old
+          </div>   
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="text" formControlName="phonenumber" required placeholder="Enter your phone number">
+          <div *ngIf="signupForm.get('phonenumber')?.touched && signupForm.get('phonenumber')?.hasError('required')" class="error-message">
+            Your phone number is required
+          </div>   
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="text" formControlName="password" required placeholder="Enter a password">
+          <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.hasError('required')" class="error-message">
+            A password is required
+          </div>
+          <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.hasError('minlength')" class="error-message">
+            The password needs at least 8 characters
+          </div>   
+        </div>
+
+        <div class="form-group">
+          <label for="repassword">Reenter Password</label>
+          <input id="repassword" type="text" formControlName="repassword" required placeholder="Reenter your password">
+        </div>
+
+        <button type="submit" class="primary" (click)="onSubmit()" [disabled]="!signupForm.valid">Sign Up</button>
+      </form>
+    </div>
+</div>

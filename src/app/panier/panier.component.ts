@@ -1,15 +1,18 @@
+import { UserService } from './../user.service';
 import {Component, Input, OnInit} from '@angular/core';
 import { LignePanier } from '../models/LignePanier';
 import {FormsModule} from "@angular/forms";
 import {SharedService} from "../shared-service.service";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import { User } from '../models/User';
+import { NgFor} from '@angular/common';
 
 @Component({
   selector: 'app-panier',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,NgFor
   ],
   templateUrl: './panier.component.html',
   styleUrl: './panier.component.css',
@@ -18,7 +21,8 @@ export class PanierComponent implements OnInit{
   @Input() items: LignePanier[] = [];
   constructor(private sharedService: SharedService,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+            private userService : UserService) {
   }
 
   ngOnInit(): void {
@@ -44,18 +48,16 @@ export class PanierComponent implements OnInit{
   }
 
   removeItem(index: number) {
-    this.items.splice(index, 1);
+    this.sharedService.removeProductFromCart(index);
   }
 
   validerPanier() {
-    if (this.authService.isLoggedIn()) {
+    if (this.userService.isLoggedIn()) {
       alert('Panier validé avec succès!');
     } else {
       this.router.navigate(['/signin']);
     }
-    for (let i = this.items.length - 1; i >= 0; i--) {
-      this.removeItem(i); // Call deleteItem for each item
-    }
+    this.sharedService.clearCart();
     
   }
 
@@ -67,5 +69,9 @@ export class PanierComponent implements OnInit{
     if (this.items[index].quantite > 1) {
       this.items[index].quantite -= 1;
     }
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 }
