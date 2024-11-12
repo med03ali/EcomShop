@@ -1,14 +1,21 @@
+import { getFirestore,collection, getDocs } from '@angular/fire/firestore';
+import { environment } from './environment';
 import { Component } from '@angular/core';
 import {RouterOutlet, Routes} from '@angular/router';
 import { ListProduitsComponent } from "./list-produits/list-produits.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import {PanierComponent} from "./panier/panier.component";
 import { FormControl,FormGroup,ReactiveFormsModule } from '@angular/forms';
+import { FirebaseAppModule, initializeApp } from '@angular/fire/app';
+
+// TODO: Replace the following with your app's Firebase project configuration
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent,ReactiveFormsModule],
+  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent,ReactiveFormsModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
