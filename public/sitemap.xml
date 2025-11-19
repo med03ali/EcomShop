@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://ecom-shop-chi.vercel.app/</loc>
+      <lastmod>2025-11-19</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>1.00</priority>
+   </url>
+   <url>
+      <loc>https://ecom-shop-chi.vercel.app/category/smartphones</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.80</priority>
+   </url>
+   <url>
+      <loc>https://ecom-shop-chi.vercel.app/category/laptops</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.80</priority>
+   </url>
+   <url>
+      <loc>https://ecom-shop-chi.vercel.app/details-produit/1</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.90</priority>
+   </url>
+   </urlset>

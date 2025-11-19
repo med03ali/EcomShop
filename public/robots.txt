@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /panier
+Disallow: /profile
+Disallow: /signin
+Disallow: /signup
+
+# C'est cette ligne qu'il faut adapter :
+Sitemap: https://ecom-shop-chi.vercel.app/sitemap.xml
