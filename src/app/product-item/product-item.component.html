@@ -1,17 +1,31 @@
-<div class="clickable-component" (click)="onComponentClick(product.id)">
-<div class="card h-100 shadow-sm">
-  <img [src]="product.images[0]" class="card-img-top img-fluid card-img-custom" alt="{{ product.title }}">
-  <div class="card-body d-flex flex-column">
-    <h5 class="card-title">{{ product.title }}</h5>
-    <p class="card-text">{{ product.description }}</p>
-    <h5 class="card-title mt-auto">{{ product.price }} $</h5>
+<a [routerLink]="['/details-produit', product.id]" class="text-decoration-none text-dark h-100 d-block">
+  
+  <div class="card h-100 shadow-sm component-hover">
+    
+    <img 
+      [src]="product.images[0]" 
+      class="card-img-top img-fluid card-img-custom" 
+      [alt]="'Achat ' + product.title + ' pas cher'"
+      loading="lazy"
+    >
 
-    <div class="d-flex justify-content-between align-items-center">
-      <span [ngStyle]="{ color: getColor() }">{{ getState() }}</span>
-      @if (product.stock > 0){
-        <a class="btn btn-primary" (click)="addToPanier($event)">Add To Cart</a>
-      }
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title">{{ product.title }}</h5>
+      
+      <p class="card-text text-muted small">{{ product.description.substring(0, 60) }}...</p>
+      
+      <h5 class="card-title mt-auto text-primary">{{ product.price }} $</h5>
+
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span [ngStyle]="{ color: getColor(), 'font-weight': 'bold' }">{{ getState() }}</span>
+        
+        @if (product.stock > 0){
+          <button class="btn btn-primary btn-sm" (click)="addToPanier($event)">
+            Add To Cart
+          </button>
+        }
+      </div>
     </div>
   </div>
-</div>
-</div>
+
+</a>

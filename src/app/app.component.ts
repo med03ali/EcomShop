@@ -1,49 +1,51 @@
-import { getFirestore,collection, getDocs } from '@angular/fire/firestore';
-import { environment } from './environment';
-import { Component } from '@angular/core';
-import {RouterOutlet, Routes} from '@angular/router';
+import { Component, OnInit } from '@angular/core'; // <--- Ajouter OnInit
+import { Title, Meta } from '@angular/platform-browser'; // <--- IMPORT SEO CRUCIAL
+import { RouterOutlet } from '@angular/router';
 import { ListProduitsComponent } from "./list-produits/list-produits.component";
 import { NavbarComponent } from "./navbar/navbar.component";
-import {PanierComponent} from "./panier/panier.component";
-import { FormControl,FormGroup,ReactiveFormsModule } from '@angular/forms';
-import { FirebaseAppModule, initializeApp } from '@angular/fire/app';
-
-// TODO: Replace the following with your app's Firebase project configuration
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent,ReactiveFormsModule,
-  ],
+  imports: [RouterOutlet, ListProduitsComponent, NavbarComponent, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit { // <--- Implémenter OnInit
   title = 'ecom-app';
   cartItemCount: number = 0;
-  constructor() {
+
+  // Injection des services SEO
+  constructor(private titleService: Title, private metaService: Meta) {}
+
+  ngOnInit(): void {
+    // 1. DÉFINIR LE TITRE PRINCIPAL DU SITE
+    this.titleService.setTitle('3eskariShop - Vente en ligne High-Tech & Lifestyle Maroc');
+
+    // 2. DÉFINIR LA DESCRIPTION PRINCIPALE (Ce qu'on voit sous le lien bleu Google)
+    this.metaService.addTag({ 
+      name: 'description', 
+      content: 'Découvrez 3eskariShop : Votre destination n°1 au Maroc pour les PC portables, smartphones, produits de beauté et décoration. Livraison rapide et paiement à la livraison.' 
+    });
+
+    // 3. MOTS CLÉS (Optionnel mais bien pour le projet)
+    this.metaService.addTag({ name: 'keywords', content: 'ecommerce maroc, pc portable rabat, achat en ligne, 3eskariShop' });
+
+    // 4. OPEN GRAPH (Pour un joli partage sur WhatsApp/Facebook)
+    this.metaService.addTag({ property: 'og:title', content: '3eskariShop - Le meilleur du E-commerce' });
+    this.metaService.addTag({ property: 'og:image', content: 'https://votre-site.com/assets/logo-partage.jpg' });
   }
 
-  // Handle search text emitted by NavbarComponent
   onSearchedText(searchKey: string) {
     console.log('Search for:', searchKey);
-    // Add logic here to filter products based on searchKey
   }
 
-  // Handle category selection emitted by NavbarComponent
   onCategorySelected(category: string) {
     console.log('Category selected:', category);
-    // Add logic here to filter products based on the selected category
   }
 
-  // This method should be updated whenever items in the cart change
   updateCartItemCount(count: number) {
     this.cartItemCount = count;
   }
-
-
-
-
-
 }
