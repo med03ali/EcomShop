@@ -1,4 +1,6 @@
-<div class="container mt-5" *ngIf="product"> <div [innerHTML]="jsonLD"></div> 
+<div class="container mt-5" *ngIf="product">
+  
+  <div [innerHTML]="jsonLD"></div> 
 
   <div class="row">
     <div class="col-md-6">
@@ -37,8 +39,42 @@
     </div>
   </div>
 
+  <hr class="my-5">
+
+  <div class="seo-content-block">
+    <h2 class="mb-3">Pourquoi acheter {{ product.title }} sur 3eskariShop ?</h2>
+    
+    <p>
+      Vous recherchez le meilleur rapport qualité/prix pour <strong>{{ product.title }}</strong> au Maroc ? 
+      Ne cherchez plus. Chez 3eskariShop, nous sélectionnons rigoureusement nos articles pour vous offrir 
+      une expérience d'achat exceptionnelle. Ce produit se distingue par sa fiabilité et son design, 
+      ce qui en fait un choix incontournable dans sa catégorie.
+    </p>
+
+    <h3 class="mt-4">Caractéristiques et Avantages</h3>
+    
+    <p>
+      Opter pour <strong>{{ product.title }}</strong>, c'est choisir la qualité. 
+      En commandant sur notre site, vous bénéficiez de :
+    </p>
+    <ul>
+      <li>Une <strong>livraison rapide</strong> partout au Maroc (Casablanca, Rabat, Tanger, Marrakech...).</li>
+      <li>Un produit certifié conforme et authentique.</li>
+      <li>Un service client disponible pour répondre à toutes vos questions sur l'utilisation de votre {{ product.title }}.</li>
+    </ul>
+
+    <h3 class="mt-4">Conseils d'utilisation et Entretien</h3>
+    
+    <p>
+      Pour profiter durablement de votre achat, nous vous conseillons de suivre les recommandations d'usage. 
+      Nos experts ont validé ce modèle pour sa robustesse. N'attendez plus, le stock est limité ! 
+      Commandez dès aujourd'hui votre <strong>{{ product.title }}</strong> au prix de {{ product.price }} $ et profitez de nos offres exclusives.
+    </p>
+  </div>
+  
+  <hr class="my-5">
   <div class="comment-section">
-     <div *ngFor="let comment of filteredComments" class="comment-card">
+      <div *ngFor="let comment of filteredComments" class="comment-card">
         <div class="comment-header">
           <div class="user-info">
             <span class="user-name">{{ comment.user.name }} {{ comment.user.lastname }}</span>
